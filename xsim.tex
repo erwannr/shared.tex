@@ -1,0 +1,49 @@
+\usepackage{xsim}
+
+\ProvideDocumentCommand{\ExerciseName}{}{Question}
+\ProvideDocumentCommand{\SolutionName}{}{Answer}
+
+\DeclareExerciseType{question}{
+  exercise-env = question,
+  solution-env = answer,
+  exercise-name = \ExerciseName,
+  solution-name = \SolutionName,
+  exercise-template = default,
+  solution-template = default
+}
+
+% Custom template without points in margin
+% \DeclareExerciseEnvironmentTemplate{nopoints}{%
+% \subsection*{%
+% \XSIMmixedcase{\GetExerciseName}\nobreakspace
+% \GetExerciseProperty{counter}%
+% \IfInsideSolutionF{%
+% \GetExercisePropertyT{subtitle}
+% { {\normalfont\itshape\PropertyValue}}%
+% }%
+% }%
+% }{\par}
+
+\DeclareExerciseEnvironmentTemplate{nopoints}{%
+  \subsubsection*{%
+    \IfInsideSolutionTF{%
+      % In answer: create target and link back to question
+      \hypertarget{answer:\ExerciseID}{}%
+      \hyperlink{question:\ExerciseID}{%
+        \XSIMmixedcase{\GetExerciseName}\nobreakspace
+        \GetExerciseProperty{counter}%
+      }%
+      \GetExercisePropertyT{subtitle}
+      { {\normalfont\itshape\PropertyValue}}%
+    }{%
+      % In question: create target and link to answer
+      \hypertarget{question:\ExerciseID}{}%
+      \XSIMmixedcase{\GetExerciseName}\nobreakspace
+      \GetExerciseProperty{counter}%
+      \GetExercisePropertyT{subtitle}
+      { {\normalfont\itshape\PropertyValue}}%
+      \quad
+      {\small\hyperlink{answer:\ExerciseID}{(→ réponse)}}%
+    }%
+  }%
+}{\par}
