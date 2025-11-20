@@ -1,0 +1,314 @@
+# A meta file
+
+* shell
+* tex
+** bib 
+:PROPERTIES:
+:header-args: :tangle ./bib.tex
+:END:
+
+#+begin_src latex
+  % \usepackage[bibencoding=auto, sorting=ynt, style=numeric, defernumbers=true]{biblatex}
+  \usepackage[bibencoding=auto, sorting=ynt, style=numeric]{biblatex}
+#+end_src
+
+** changes
+:PROPERTIES:
+:header-args: :tangle ./changes.tex
+:END:
+
+#+begin_src latex
+  \usepackage{changes} 
+  \setcommentmarkup{}
+  \sethighlightmarkup{}
+  \setaddedmarkup{#1}
+  \setauthormarkup{\textsuperscript{#1}}
+  \definechangesauthor[name={Erwann}, color=black]{R1}
+#+end_src
+
+** counter
+
+~Ctrl-C Ctrl-c~
+#+begin_src shell
+  curl -L -o ./counter.tex \
+      https://raw.githubusercontent.com/rogard/helpers.tex/f0eafb87ecd72ec36978426513acce6e784892fb/tex/module-counter.tex
+#+end_src
+
+#+RESULTS:
+
+** enotez
+:PROPERTIES:
+:header-args: :tangle ./enotez.tex
+:END:
+
+#+begin_src latex
+  \usepackage{enotez}
+  \DeclareInstance{enotez-list}{default}{paragraph}{
+    heading = \subsection*{Notes}
+  }  
+#+end_src
+
+** enumitem
+:PROPERTIES:
+:header-args: :tangle ./enumitem.tex
+:END:
+
+#+begin_src latex
+  \usepackage{enumitem}
+  \newlist{inlitemize}{itemize*}{1}
+  \setlist[inlitemize]{label={}, itemjoin={{; }}, after*={.}}
+#+end_src
+
+** french
+:PROPERTIES:
+:header-args: :tangle ./french.tex
+:END:
+
+#+begin_src latex
+  \usepackage[english,french]{babel}
+
+  \usepackage{datetime2}
+  \DTMsetstyle{french}
+#+end_src
+
+** quotestyle
+:PROPERTIES:
+:header-args: :tangle ./quotestyle.tex
+:END:
+
+#+begin_src latex
+  \tcbset{
+    quotestyle/.style={
+      colback=gray!5,
+      colframe=gray!50,
+      boxrule=0.5pt,
+      leftrule=2mm,
+      arc=0pt,
+      boxsep=5pt,
+      left=3mm,
+      right=3mm,
+      top=2mm,
+      bottom=2mm,
+      breakable
+    }
+  }
+#+end_src
+
+** xsim
+:PROPERTIES:
+:header-args: :tangle ./xsim.tex
+:END:
+
+#+begin_src latex
+  \usepackage{xsim}
+
+  \ProvideDocumentCommand{\ExerciseName}{}{Question}
+  \ProvideDocumentCommand{\SolutionName}{}{Answer}
+
+  \DeclareExerciseType{question}{
+    exercise-env = question,
+    solution-env = answer,
+    exercise-name = \ExerciseName,
+    solution-name = \SolutionName,
+    exercise-template = default,
+    solution-template = default
+  }
+
+  % Custom template without points in margin
+  % \DeclareExerciseEnvironmentTemplate{nopoints}{%
+  % \subsection*{%
+  % \XSIMmixedcase{\GetExerciseName}\nobreakspace
+  % \GetExerciseProperty{counter}%
+  % \IfInsideSolutionF{%
+  % \GetExercisePropertyT{subtitle}
+  % { {\normalfont\itshape\PropertyValue}}%
+  % }%
+  % }%
+  % }{\par}
+
+  \DeclareExerciseEnvironmentTemplate{nopoints}{%
+    \subsubsection*{%
+      \IfInsideSolutionTF{%
+        % In answer: create target and link back to question
+        \hypertarget{answer:\ExerciseID}{}%
+        \hyperlink{question:\ExerciseID}{%
+          \XSIMmixedcase{\GetExerciseName}\nobreakspace
+          \GetExerciseProperty{counter}%
+        }%
+        \GetExercisePropertyT{subtitle}
+        { {\normalfont\itshape\PropertyValue}}%
+      }{%
+        % In question: create target and link to answer
+        \hypertarget{question:\ExerciseID}{}%
+        \XSIMmixedcase{\GetExerciseName}\nobreakspace
+        \GetExerciseProperty{counter}%
+        \GetExercisePropertyT{subtitle}
+        { {\normalfont\itshape\PropertyValue}}%
+        \quad
+        {\small\hyperlink{answer:\ExerciseID}{(→ réponse)}}%
+      }%
+    }%
+  }{\par}
+#+end_src
+
+* bib
+:PROPERTIES:
+:header-args: :tangle ./french.bib
+:END:
+
+#+begin_src bib
+@Article{losada2014,
+  author     = {Losada, José Manuel},
+  title      = {Littérature et {P}hilosophie, le règne de {D}escartes},
+  year       = {2014},
+  file       = {:/home/erwann/unique/jiL15fkL9H.pdf:PDF},
+  groups     = {human sciences},
+  readstatus = {read},
+  url        = {https://www.researchgate.net/publication/324758507_Litterature_et_philosophie_Le_regne_de_Descartes},
+}
+#+end_src
+
+#+begin_src latex
+  @Article{parmentier2014,
+    author     = {Parmentier, Marc},
+    journal    = {Atlante},
+    title      = {Voltaire et l'optimisme {L}eibinizien},
+    year       = {2014},
+    file       = {:/home/erwann/unique/FxItO3y2vL.pdf:PDF},
+    groups     = {human sciences},
+    readstatus = {skimmed},
+    url        = {https://atlante.univ-lille.fr/data/images/_articles/ATLANTE_1_5.pdf},
+  }
+#+end_src
+
+#+begin_src latex
+  @Book{darcos2005,
+    author    = {Voltaire and Darcos, Xavier},
+    publisher = {Hachette Education},
+    title     = {Candide, Voltaire},
+    isbn      = {978-2011691699},
+    date      = {2005-06-29},
+    groups    = {human sciences},
+    language  = {french},
+  }
+#+end_src
+
+#+begin_src latex
+  @Book{pernon2009,
+    author     = {de Montaigne, Michel and de Pernon, Guy},
+    title      = {Les Essais -- Livre I},
+    year       = {2009},
+    groups     = {human sciences},
+    language   = {french},
+    readstatus = {skimmed},
+    url        = {https://ia601507.us.archive.org/12/items/QuePhilosopherCEstApprendreAMourir/EssaisI.pdf}
+  }
+#+end_src
+
+#+begin_src latex
+  @Misc{standford-ontological,
+    title  = {Descartes' Ontological Argument},
+    groups = {human sciences},
+    date = {2001-06-18},
+    url    = {https://plato.stanford.edu/entries/descartes-ontological/}
+  }
+#+end_src
+
+#+begin_src latex
+  @Misc{bovary-audio-1,
+    title = {Madame Bovary 1/2 - Gustave Flaubert ( AudioBook FR )},
+    url = {https://www.youtube.com/watch?v=MqwCpRzVDZY},
+    date = {2016-09-15},
+    groups     = {human sciences},
+    language = {french}
+  }
+#+end_src
+
+#+begin_src latex
+  @Misc{bovary-audio-2,
+    title = {Madame Bovary 2/2 - Gustave Flaubert ( AudioBook FR )},
+    url = {https://www.youtube.com/watch?v=-Z2BEoRrGYw},
+    date = {2016-09-16},
+    groups     = {human sciences},
+    language = {french}
+  }
+#+end_src
+
+#+begin_src latex
+  @book{stendhal1927,
+    publisher = {Le Divan},
+    author = {Stendhal},
+    title = {Le rouge et le noir},
+    url = {https://beq.ebooksgratuits.com/vents/Stendhal-rouge.pdf},
+    year = {1917},
+    groups     = {human sciences},
+    language = {french}
+  }
+#+end_src
+
+#+begin_src latex
+  @book{flaubert1910,
+    year = {1910},
+    title = {Madame Bovary},
+    url = {https://fr.wikisource.org/wiki/Madame_Bovary/Texte_entier},
+    publisher = {Louis Conard},
+    groups     = {human sciences},
+    language = {french}
+  }
+#+end_src
+
+#+begin_src latex
+  @book{ternois1937,
+    author = {{Stendhal} and Ternois, René},
+    title = {Le rouge et le noir},
+    publisher = {Larousse, Paris},
+    groups = {human sciences},
+    year = {1937},
+    language = {french}
+  }
+#+end_src
+
+#+begin_src latex
+  @Book{girard1961,
+    author    = {Girard, René},
+    publisher = {Éditions Grasset \& Fasquelle},
+    title     = {Mensonge romantique et vérité romanesque},
+    year      = {1961},
+    keywords = {france, literature},
+    groups    = {human sciences},
+    url       = {https://search.worldcat.org/title/1246624044},
+  }
+#+end_src
+
+#+begin_src latex
+  @misc{droitsdauteur,
+    url = {https://web.archive.org/web/20210501000000*/https://www.culture.gouv.fr/Media/Thematiques/Propriete-litteraire-et-artistique/Conseil-superieur-de-la-propriete-litteraire-et-artistique/Files/Fiches-techniques-PLA/Fiche-internet-5-exceptions-au-droit-d-auteur2},
+    title = {Les exceptions au droit d'auteur -- Fiche No. 5},
+    date = {2021-05-01},
+    groups = {normative},
+    language = {french}}  
+#+end_src
+
+#+begin_src latex
+  @book{sellier1976,
+    title={Pens{\'e}es},
+    author={Pascal, Blaise and Sellier, Philippe},
+    lccn={76480679},
+    series={Les Classiques du Mercure},
+    url={https://books.google.com/books?id=OC8MogEACAAJ},
+    year={1976},
+    language = {french},
+    groups = {human sciences},
+    publisher={Mercure de France}
+  }
+#+end_src
+
+#+begin_src latex
+  @inbook{pascal-fragment-469,
+    author = {Pascal, Blaise},
+    title = {Le pharisien et le publicain},
+    crossref = {sellier1976},
+    url = {https://www.penseesdepascal.fr/XXIII/XXIII16-moderne.php},
+    urldate = {2025-11-18}
+  }
+#+end_src
