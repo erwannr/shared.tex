@@ -156,7 +156,7 @@
 #+end_src
 ** textutil
 :PROPERTIES:
-:header-args: :tangle ./textutil.tex
+:header-args: :tangle ./provide.tex
 :END:
 
 #+begin_src latex
@@ -169,3 +169,8 @@
 }
 #+end_src
 
+#+begin_src latex
+  \ProvideDocumentCommand{\TheDate}{m}{%
+    \today
+  }
+#+end_src
