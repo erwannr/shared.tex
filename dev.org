@@ -105,56 +105,39 @@
 :END:
 
 #+begin_src latex
-  % \usepackage{xsim}
-
   \ProvideDocumentCommand{\XSIMexerciseName}{}{Question}
   \ProvideDocumentCommand{\XSIMsolutionName}{}{Answer}
-  \ProvideDocumentCommand{\XSIMformat}{#1}{\subsection*{#1}}
+  \ProvideDocumentCommand{\XSIMformat}{m}{\subsection*{#1}}
+#+end_src
 
+#+begin_src latex
+  \DeclareExerciseEnvironmentTemplate{nopoints}{%
+    {%
+      \XSIMformat{
+        \IfInsideSolutionTF{%
+          % Answer heading with hyperlink
+          \hypertarget{answer:\ExerciseID}{}%
+          \hyperlink{question:\ExerciseID}{\GetExerciseName\ \GetExerciseProperty{counter}}%
+        }{%
+          % Question heading with link to answer
+          \hypertarget{question:\ExerciseID}{}%
+          \GetExerciseName\ \GetExerciseProperty{counter}%
+          \quad{\small\hyperlink{answer:\ExerciseID}{(→\XSIMsolutionName)}}%
+        }%
+      }
+    }%
+  }{\par}
+#+end_src
+
+#+begin_src latex
   \DeclareExerciseType{question}{
     exercise-env = question,
     solution-env = answer,
     exercise-name = \XSIMexerciseName,
     solution-name = \XSIMsolutionName,
-    exercise-template = default,
-    solution-template = default
+    exercise-template = nopoints,
+    solution-template = nopoints
   }
-
-  % Custom template without points in margin
-  % \DeclareExerciseEnvironmentTemplate{nopoints}{%
-  % \subsection*{%
-  % \XSIMmixedcase{\GetExerciseName}\nobreakspace
-  % \GetExerciseProperty{counter}%
-  % \IfInsideSolutionF{%
-  % \GetExercisePropertyT{subtitle}
-  % { {\normalfont\itshape\PropertyValue}}%
-  % }%
-  % }%
-  % }{\par}
-
-  \DeclareExerciseEnvironmentTemplate{nopoints}{%
-    \XSIMformat*{%
-      \IfInsideSolutionTF{%
-        % In answer: create target and link back to question
-        \hypertarget{answer:\ExerciseID}{}%
-        \hyperlink{question:\ExerciseID}{%
-          \XSIMmixedcase{\GetExerciseName}\nobreakspace
-          \GetExerciseProperty{counter}%
-        }%
-        \GetExercisePropertyT{subtitle}
-        { {\normalfont\itshape\PropertyValue}}%
-      }{%
-        % In question: create target and link to answer
-        \hypertarget{question:\ExerciseID}{}%
-        \XSIMmixedcase{\GetExerciseName}\nobreakspace
-        \GetExerciseProperty{counter}%
-        \GetExercisePropertyT{subtitle}
-        { {\normalfont\itshape\PropertyValue}}%
-        \quad
-        {\small\hyperlink{answer:\ExerciseID}{(→\XSIMsolutionName \)}}%
-      }%
-    }%
-  }{\par}
 #+end_src
 
 ** provide
