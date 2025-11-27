@@ -1,13 +1,14 @@
-%\usepackage{xsim}
+% \usepackage{xsim}
 
-\ProvideDocumentCommand{\ExerciseName}{}{Question}
-\ProvideDocumentCommand{\SolutionName}{}{Answer}
+\ProvideDocumentCommand{\XSIMexerciseName}{}{Question}
+\ProvideDocumentCommand{\XSIMsolutionName}{}{Answer}
+\ProvideDocumentCommand{\XSIMformat}{#1}{\subsection*{#1}}
 
 \DeclareExerciseType{question}{
   exercise-env = question,
   solution-env = answer,
-  exercise-name = \ExerciseName,
-  solution-name = \SolutionName,
+  exercise-name = \XSIMexerciseName,
+  solution-name = \XSIMsolutionName,
   exercise-template = default,
   solution-template = default
 }
@@ -25,7 +26,7 @@
 % }{\par}
 
 \DeclareExerciseEnvironmentTemplate{nopoints}{%
-  \subsubsection*{%
+  \XSIMformat*{%
     \IfInsideSolutionTF{%
       % In answer: create target and link back to question
       \hypertarget{answer:\ExerciseID}{}%
@@ -43,7 +44,7 @@
       \GetExercisePropertyT{subtitle}
       { {\normalfont\itshape\PropertyValue}}%
       \quad
-      {\small\hyperlink{answer:\ExerciseID}{(→ réponse)}}%
+      {\small\hyperlink{answer:\ExerciseID}{(→\XSIMsolutionName \)}}%
     }%
   }%
 }{\par}
